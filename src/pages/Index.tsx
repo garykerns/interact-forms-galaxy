@@ -1,8 +1,25 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { motion } from 'framer-motion';
+import { Progress } from '@/components/ui/progress';
 
 const Index = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="w-full max-w-md space-y-4 text-center"
+        >
+          <h2 className="text-2xl font-semibold">Loading...</h2>
+          <Progress value={100} className="w-full" />
+          <p className="text-muted-foreground">Please wait while we load your content</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
